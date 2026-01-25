@@ -10,9 +10,14 @@
 		Conference
 	</h2>
 	{% if comments|length > 0 %}
+		<div>
+			Il y a
+			{{ comments|length }}
+			commentaire.</div>
+
 		{% for comment in comments %}
 			{% if comment.photofilename %}
-				<img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}" style="max-widith: 200px"/>
+				<img src="{{ asset('uploads/uploads/photos/' ~ comment.photofilename) }}" style="max-widith: 200px"/>
 			{% endif %}
 
 			<h4>{{ comment.author }}</h4>
@@ -22,6 +27,15 @@
 			<p>
 				{{ comment.text }}</p>
 		{% endfor %}
+
+        {% if previous >= 0 %}
+            <a href="{{ path('conference', {'id': conference.id, 'offset': previous}) }}">Previous</a>
+        {% endif %}
+
+        {% if next < comments|length %}
+            <a href="{{ path('conference', {'id': conference.id, 'offset': next}) }}">Next</a>
+        {% endif %}
+
 	{% else %}
 		<div>
 			Aucun commentaire n'as ete poster pour cette conference.
