@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+	{{ conference.city }}
+	-
+	{{ conference.year }}
+{% endblock %}
+
+{% block body %}
+	<h2>{{ conference }}
+		Conference
+	</h2>
+	{% if comments|length > 0 %}
+		{% for comment in comments %}
+			{% if comment.photofilename %}
+				<img src="{{ asset('uploads/photos/' ~ comment.photofilename) }}" style="max-widith: 200px"/>
+			{% endif %}
+
+			<h4>{{ comment.author }}</h4>
+			<small>
+				{{ comment.createdAt|format_datetime('medium', 'short') }}
+			</small>
+			<p>
+				{{ comment.text }}</p>
+		{% endfor %}
+	{% else %}
+		<div>
+			Aucun commentaire n'as ete poster pour cette conference.
+		</div>
+	{% endif %}
+{% endblock %}
