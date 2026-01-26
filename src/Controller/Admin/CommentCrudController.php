@@ -50,9 +50,9 @@ class CommentCrudController extends AbstractCrudController
             ->hideOnIndex()
         ;
         yield ImageField::new('photoFilename')
+        ->setBasePath('/public/uploads/photos')
             ->setLabel('Photo')
-            ->setBasePath('/uploads/uploads/photos')
-            ->setUploadDir('/uploads/uploads/photos')
+            ->setUploadDir('/public/uploads/photos')
             ->setUploadedFileNamePattern(
                 '[slug]-[timestamp].[extension]'
             )
