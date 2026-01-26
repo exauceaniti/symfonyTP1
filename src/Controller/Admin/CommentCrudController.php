@@ -18,7 +18,6 @@ use Symfony\Component\DomCrawler\Image;
 
 class CommentCrudController extends AbstractCrudController
 {
-
     public static function getEntityFqcn(): string
     {
         return Comment::class;
@@ -66,8 +65,6 @@ class CommentCrudController extends AbstractCrudController
         ]);
         if (Crud::PAGE_EDIT === $pageName) {
             yield $createdAt->setFormTypeOption('disabled', true);
-        } else {
-            yield $createdAt;
         }
     }
 
