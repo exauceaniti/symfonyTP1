@@ -28,17 +28,20 @@
 				{{ comment.text }}</p>
 		{% endfor %}
 
-        {% if previous >= 0 %}
-            <a href="{{ path('conference', {slug: conference.slug, 'offset': previous}) }}">Previous</a>
-        {% endif %}
+		{% if previous >= 0 %}
+			<a href="{{ path('conference', {slug: conference.slug, 'offset': previous}) }}">Previous</a>
+		{% endif %}
 
-        {% if next < comments|length %}
-            <a href="{{ path('conference', {slug: conference.slug, 'offset': next}) }}">Next</a>
-        {% endif %}
+		{% if next < comments|length %}
+			<a href="{{ path('conference', {slug: conference.slug, 'offset': next}) }}">Next</a>
+		{% endif %}
 
 	{% else %}
 		<div>
 			Aucun commentaire n'as ete poster pour cette conference.
 		</div>
 	{% endif %}
-{% endblock %}
+	<h2>
+		Ajouter votre commentaire
+	</h2>
+	{{ form(comment_form) }}{% endblock %}
