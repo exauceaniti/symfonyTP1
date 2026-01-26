@@ -30,7 +30,6 @@ class CommentType extends AbstractType
                     new Image(maxSize: '1024k')
                 ],
             ])
-
             ->add('submit', SubmitType::class)
         ;
     }
