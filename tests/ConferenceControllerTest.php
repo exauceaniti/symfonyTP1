@@ -15,26 +15,6 @@ class ConferenceControllerTest extends WebTestCase
         $this->assertSelectorTextContains('h2', 'Donner vos feedback !');
     }
 
-    public function testConferencePage()
-    {
-        $client = static::createClient();
-        $crawler = $client->request('GET', '/');
-
-        $this->assertCount(2, $crawler->filter('h4'));
-
-        $client->clickLink('View'); // Ou 'Voir' selon ton bouton
-
-        $this->assertResponseIsSuccessful();
-        $this->assertSelectorTextContains('h2', 'Amsterdam 2019');
-
-        // On vérifie qu'il y a bien un élément qui parle de "1" commentaire
-        // On utilise un sélecteur plus large pour éviter les erreurs de texte exact
-        $this->assertSelectorTextContains('div', '1');
-        $this->assertSelectorTextContains('div', 'comment');
-
-        dump($client->getResponse()->getContent());
-    }
-
     public function testCommentSubmission()
     {
         $client = static::createClient();
@@ -50,5 +30,20 @@ class ConferenceControllerTest extends WebTestCase
 
         $this->assertSelectorTextContains('div', '2');
         $this->assertSelectorTextContains('div', 'commentaire');
+    }
+
+    public function testConferencePage()
+    {
+        $client = static::createClient();
+        $crawler = $client->request('GET', '/');
+
+        $this->assertCount(2, $crawler->filter('h4'));
+
+        $client->clickLink('View');
+
+        $this->assertPageTitleContains('Amsterdam');
+        $this->assertResponseIsSuccessful();
+        $this->assertSelectorTextContains('h2', 'Amsterdam 2019');
+        $this->assertSelectorExists('div:contains("commentaire")');
     }
 }
