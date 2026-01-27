@@ -39,7 +39,7 @@ class Comment
     private ?string $photoFilename = null;
 
     #[ORM\PrePersist]
-    public function setCreatedValue()
+    public function setCreatedAtValue()
     {
         $this->createdAt = new \DateTimeImmutable();
     }
