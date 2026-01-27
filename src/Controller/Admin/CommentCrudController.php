@@ -50,7 +50,7 @@ class CommentCrudController extends AbstractCrudController
             ->hideOnIndex()
         ;
         yield ImageField::new('photoFilename')
-        ->setBasePath('/public/uploads/photos')
+            ->setBasePath('/public/uploads/photos')
             ->setLabel('Photo')
             ->setUploadDir('/public/uploads/photos')
             ->setUploadedFileNamePattern(
@@ -67,5 +67,4 @@ class CommentCrudController extends AbstractCrudController
             yield $createdAt->setFormTypeOption('disabled', true);
         }
     }
-
 }
