@@ -30,7 +30,7 @@ final class ConferenceController extends AbstractController
     {
         return $this->render('conference/index.html.twig', [
             'conferences' => $conferenceRepository->findAll(),
-        ]);
+        ])->setSharedMaxAge(3600);
     }
 
 
@@ -39,7 +39,7 @@ final class ConferenceController extends AbstractController
         Request $request,
         Conference $conference,
         CommentRepository $commentRepository,
-        // SpamChecker $spamChecker,
+            // SpamChecker $spamChecker,
         #[Autowire('%photo_dir')] string $photoDir,
     ): Response {
         $comment = new Comment();
