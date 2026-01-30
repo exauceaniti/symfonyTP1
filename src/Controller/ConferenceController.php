@@ -9,6 +9,7 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Entity\Conference;
 use App\Repository\CommentRepository;
@@ -31,6 +32,13 @@ final class ConferenceController extends AbstractController
         return $this->render('conference/index.html.twig', [
             'conferences' => $conferenceRepository->findAll(),
         ])->setSharedMaxAge(3600);
+    }
+    #[Route('/conference_header', name: 'conference_header')]
+    public function conferenceHeader(ConferenceRepository $conferenceRepository): Response
+    {
+        return $this->render('conference/header.html.twig', [
+            'conferences' => $conferenceRepository->findAll(),
+        ]);
     }
 
 
