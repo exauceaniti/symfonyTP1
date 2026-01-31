@@ -9,7 +9,6 @@ use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Notifier\NotifierInterface;
@@ -87,6 +86,7 @@ final class ConferenceController extends AbstractController
         if ($form->isSubmitted()) {
             $notifier->send(new Notification('Can you check your submission? There are some problems with it.', ['browser']));
         }
+
         $offset = max(0, $request->query->getInt('offset', 0));
         $paginator = $commentRepository->getCommentPaginator($conference, $offset);
 
