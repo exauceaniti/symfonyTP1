@@ -47,19 +47,23 @@ class CommentMessageHandler
             };
             $this->commentStateMachine->apply($comment, $transition);
             $this->entityManager->flush();
+            $this->bus->dispatch($message);
 
+        } elseif ($this->commentStateMachine->can($comment, 'publish') || $this->commentStateMachine->can($comment, 'publish_ham')) {
             $this->notifier->send(new CommentReviewNotification($comment), ...$this->notifier->getAdminRecipients());
 
-        //     $this->bus->dispatch($message);
-        // } elseif ($this->commentStateMachine->can($comment, 'optimize')) {
-        //     if ($comment->getPhotoFilename()) {
-        //         $this->imageOptimizer->resize($this->photoDir . '/' . $comment->getPhotoFilename());
-        //     }
-        //     $this->commentStateMachine->apply($comment, 'optimize');
-        //     $this->entityManager->flush();
-         
+        } elseif ($this->commentStateMachine->can($comment, 'optimize')) {
+            if ($comment->getPhotoFilename()) {
+                $this->imageOptimizer->resize($this->photoDir . '/' . $comment->getPhotoFilename());
+            }
+            $this->commentStateMachine->apply($comment, 'optimize');
+            $this->entityManager->flush();
+
         } elseif ($this->logger) {
-            $this->logger->debug('Dropping comment message', ['comment' => $comment->getId(), 'state' => $comment->getState()]);
+            $this->logger->debug('Dropping comment message', [
+                'comment' => $comment->getId(),
+                'state' => $comment->getState()
+            ]);
         }
     }
 }
