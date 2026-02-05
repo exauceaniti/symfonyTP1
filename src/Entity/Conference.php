@@ -47,6 +47,7 @@ class Conference
      * @var Collection<int, Comment>
      */
     #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: "conference", orphanRemoval: true)]
+    #[Groups(['conference:list', 'conference:item'])]
     private $comments;
 
     #[ORM\Column(length: 255)]
